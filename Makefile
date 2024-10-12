@@ -1,6 +1,6 @@
-GO_VERSION :=1.18
+GO_VERSION :=1.23
  
-.PHONY: install-go init-go
+.PHONY: install-go init-go build
  
 setup: install-go init-go
  
@@ -17,3 +17,6 @@ init-go:
 
 build:
 	go build -o api cmd/main.go
+
+test:
+	go test ./...
