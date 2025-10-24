@@ -1,11 +1,11 @@
-GO_VERSION :=1.23
+GO_VERSION := 1.25
  
 .PHONY: install-go init-go build
  
 setup: install-go init-go
  
  
-#TODO add MacOS support
+# TODO add MacOS support
 install-go:
 	wget "https://golang.org/dl/go$(GO_VERSION).linux-amd64.tar.gz"
 	sudo tar -C /usr/local -xzf go$(GO_VERSION).linux-amd64.tar.gz
