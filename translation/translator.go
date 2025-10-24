@@ -17,10 +17,11 @@ func Translate(word string, language string) string {
 		return "hei"
 	case "german":
 		return "hallo"
+	case "swahili":
+		return "swatch"
 	default:
 		return ""
 	}
-
 }
 
 func sanitizeInput(w string) string {
