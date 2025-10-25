@@ -2,17 +2,29 @@
 
 ## Dependencies
 
-- Go version 1.23
+- Go version 1.25
 
 ## Setup
+<details open>
+<summary>Setup Linux</summary>
 
-### Install Go
++ #### Install Go
 
-`sudo make setup`
+    `sudo make setup`
 
-### Upgrade Go
++ #### Upgrade Go
 
-`sudo make install-go`
+    `sudo make upgrade-go`
+
+</details>
+
+<details>
+<summary>Setup MacOS</summary>
+
++ #### TODO
+</details>
+
+
 
 ## Release Milestones
 
@@ -21,6 +33,7 @@
 - [x] Onboarding Documentation
 - [x] Simple API response (hello world!)
 - [x] Unit tests
+- [x] System tests
 - [x] Running somewhere other than the dev machine
 
 ### V1 (7 days)
