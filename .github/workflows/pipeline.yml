@@ -104,6 +104,6 @@ jobs:
         name: translate
         entry_point: Translate
         runtime: go254
-        secrets: ${{ secrets.gcp_credentials }}
+        credentials: ${{ secrets.gcp_credentials }}
     - id: test
       run: curl "${{ steps.deploy.outputs.url }}/hello"
