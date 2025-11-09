@@ -5,26 +5,26 @@
 - Go version 1.25
 
 ## Setup
+
 <details open>
 <summary>Setup Linux</summary>
 
-+ #### Install Go
+- #### Install Go
 
-    `sudo make setup`
+  `sudo make setup`
 
-+ #### Upgrade Go
+- #### Upgrade Go
 
-    `sudo make upgrade-go`
+  `sudo make upgrade-go`
 
 </details>
 
 <details>
 <summary>Setup MacOS</summary>
 
-+ #### TODO
+- #### TODO
+
 </details>
-
-
 
 ## Release Milestones
 
@@ -38,7 +38,7 @@
 
 ### V1 (7 days)
 
-- [X] Create translation endpoint
+- [x] Create translation endpoint
 - [ ] Store translations in short-term storage
 - [ ] Call existing service for translation
 - [ ] Move towards long-term storage
