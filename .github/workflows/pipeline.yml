@@ -104,6 +104,7 @@ jobs:
         name: translate
         entry_point: Translate
         runtime: go125
+        region: 'europe-southwest1'
         secrets: ${{ secrets.GCP_CREDENTIALS }}
     - id: test
       run: curl "${{ steps.deploy.outputs.url }}/hello"
