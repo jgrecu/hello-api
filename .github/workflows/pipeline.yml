@@ -107,7 +107,7 @@ jobs:
       with:
         name: translate
         entry_point: Translate
-        runtime: go254
+        runtime: go125
         project_id: 'ci-cd-387613'
         region: 'europe-west1'
     - id: test
