@@ -2,9 +2,10 @@ package rest
 
 import (
     "encoding/json"
-    "github.com/jgrecu/hello-api/translation"
     "net/http"
     "strings"
+
+    "github.com/jgrecu/hello-api/translation"
 )
 
 type Resp struct {

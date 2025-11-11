@@ -2,10 +2,11 @@ package rest_test
 
 import (
     "encoding/json"
-    "github.com/jgrecu/hello-api/handlers/rest"
     "net/http"
     "net/http/httptest"
     "testing"
+
+    "github.com/jgrecu/hello-api/handlers/rest"
 )
 
 func TestTranslateAPI(t *testing.T) {

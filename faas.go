@@ -1,8 +1,9 @@
 package faas
 
 import (
-    "hello-api/handlers/rest"
     "net/http"
+
+    "github.com/jgrecu/hello-api/handlers/rest"
 )
 
 func Translate(w http.ResponseWriter, r *http.Request) {

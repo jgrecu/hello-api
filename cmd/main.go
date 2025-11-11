@@ -1,9 +1,10 @@
 package main
 
 import (
-    "github.com/jgrecu/hello-api/handlers/rest"
     "log"
     "net/http"
+
+    "github.com/jgrecu/hello-api/handlers/rest"
 )
 
 func main() {

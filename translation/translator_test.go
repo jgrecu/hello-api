@@ -1,8 +1,9 @@
 package translation_test
 
 import (
-    "github.com/jgrecu/hello-api/translation"
     "testing"
+
+    "github.com/jgrecu/hello-api/translation"
 )
 
 func TestTranslate(t *testing.T) {
