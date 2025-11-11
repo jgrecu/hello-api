@@ -134,4 +134,4 @@ jobs:
           promote: true
           flags: '--ignore-file=.gcloudignore'
       - id: test
-        run: curl "${{ steps.deploy.outputs.url }}/translate/hello"
+        run: curl "${{ steps.deploy.outputs.url }}/hello"
