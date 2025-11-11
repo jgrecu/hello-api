@@ -130,5 +130,8 @@ jobs:
         uses: google-github-actions/deploy-appengine@v3
         with:
           project_id: 'ci-cd-387613'
+          deliverables: app.yaml
+          promote: true
+          flags: '--ignore-file=.gcloudignore'
       - id: test
         run: curl "${{ steps.deploy.outputs.url }}/translate/hello"
