@@ -160,6 +160,8 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.gcp_credentials }}
+      - name: Install App Engine Go component
+        run: gcloud components install app-engine-go --quiet
       - name: Deploy App
         id: deploy
         uses: google-github-actions/deploy-appengine@v3
