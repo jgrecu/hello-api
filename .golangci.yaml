@@ -30,14 +30,14 @@ formatters:
       local-prefixes:
         - github.com/golangci/golangci-lint/v2
 
-issues:
-  exclude-use-default: false
-
-output:
-  format: colored-line-number
+#issues:
+#  exclude-use-default: false
+#
+#output:
+#  format: colored-line-number
 
 # print lines of code with issue, default is true
-print-issued-lines: false
+#print-issued-lines: false
 
 # print linter name in the end of issue text, default is true
-print-linter-name: true
+#print-linter-name: true
