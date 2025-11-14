@@ -1,18 +1,34 @@
 version: "2"
 linters:
+  default: none
   enable:
     - gosec
     - godot
+    - godox
     - misspell
-#    - stylecheck
     - staticcheck
 
-#linters-settings:
-#  stylecheck:
-#    # Select the Go version to target.
-#    go: "1.25"
-#    checks: ["all","ST1*"]
-#    initialisms: ["ACL", "API", "ASCII", "CPU", "CSS", "DNS", "EOF", "GUID", "HTML", "HTTP", "HTTPS", "ID", "IP", "JSON", "QPS", "RAM", "RPC", "SLA", "SMTP", "SQL", "SSH", "TCP", "TLS", "TTL", "UDP", "UI", "GID", "UID", "UUID", "URI", "URL", "UTF8", "VM", "XML", "XMPP", "XSRF", "XSS"]
+  settings:
+    godox:
+      keywords:
+        - FIXME
+    misspell:
+      locale: GB
+      ignore-rules:
+        - "importas" # linter name
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    gofmt:
+      rewrite-rules:
+        - pattern: 'interface{}'
+          replacement: 'any'
+    goimports:
+      local-prefixes:
+        - github.com/golangci/golangci-lint/v2
 
 issues:
   exclude-use-default: false
