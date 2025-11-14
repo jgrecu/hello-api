@@ -1,28 +1,33 @@
 package main
 
 import (
-    "fmt"
-    "log"
-    "net/http"
-    "os"
+	"fmt"
+	"log"
+	"net/http"
+	"os"
 
-    "github.com/jgrecu/hello-api/handlers"
-    "github.com/jgrecu/hello-api/handlers/rest"
+	"github.com/jgrecu/hello-api/handlers"
+	"github.com/jgrecu/hello-api/handlers/rest"
 )
 
 func main() {
 
-    addr := fmt.Sprintf(":%s", os.Getenv("PORT"))
-    if addr == ":" {
-        addr = ":8080"
-    }
+	addr := fmt.Sprintf(":%s", os.Getenv("PORT"))
+	if addr == ":" {
+		addr = ":8080"
+	}
 
-    mux := http.NewServeMux()
+	mux := http.NewServeMux()
 
-    mux.HandleFunc("GET /hello", rest.TranslateHandler)
-    mux.HandleFunc("GET /health", handlers.HealthCheck)
+	mux.HandleFunc("GET /hello", rest.TranslateHandler)
+	mux.HandleFunc("GET /health", handlers.HealthCheck)
 
-    log.Printf("listening on %s\n", addr)
+	server := &http.Server{Addr: addr, ReadHeaderTimeout: 3, Handler: mux}
 
-    log.Fatal(http.ListenAndServe(addr, mux))
+	log.Printf("listening on %s\n", addr)
+
+	err := server.ListenAndServe()
+	if err != nil {
+		log.Fatal(err)
+	}
 }
