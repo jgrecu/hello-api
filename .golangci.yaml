@@ -1,0 +1,43 @@
+version: "2"
+linters:
+  default: none
+  enable:
+    - gosec
+    - godot
+    - godox
+    - misspell
+    - staticcheck
+
+  settings:
+    godox:
+      keywords:
+        - FIXME
+    misspell:
+      locale: UK
+      ignore-rules:
+        - "importas" # linter name
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    gofmt:
+      rewrite-rules:
+        - pattern: 'interface{}'
+          replacement: 'any'
+    goimports:
+      local-prefixes:
+        - github.com/golangci/golangci-lint/v2
+
+#issues:
+#  exclude-use-default: false
+#
+#output:
+#  format: colored-line-number
+
+# print lines of code with issue, default is true
+#print-issued-lines: false
+
+# print linter name in the end of issue text, default is true
+#print-linter-name: true
