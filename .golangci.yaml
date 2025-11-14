@@ -13,7 +13,7 @@ linters:
       keywords:
         - FIXME
     misspell:
-      locale: GB
+      locale: UK
       ignore-rules:
         - "importas" # linter name
 
