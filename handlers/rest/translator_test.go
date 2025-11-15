@@ -9,6 +9,15 @@ import (
 	"github.com/jgrecu/hello-api/handlers/rest"
 )
 
+type stubbedService struct{}
+
+func (s *stubbedService) Translate(word string, language string) string {
+	if word == "foo" {
+		return "bar"
+	}
+	return ""
+}
+
 func TestTranslateAPI(t *testing.T) {
 	tt := []struct {
 		Endpoint            string
@@ -17,26 +26,27 @@ func TestTranslateAPI(t *testing.T) {
 		ExpectedTranslation string
 	}{
 		{
-			Endpoint:            "/hello",
+			Endpoint:            "/foo",
 			StatusCode:          http.StatusOK,
 			ExpectedLanguage:    "english",
-			ExpectedTranslation: "hello",
+			ExpectedTranslation: "bar",
 		},
 		{
-			Endpoint:            "/hello?language=german",
+			Endpoint:            "/foo?language=german",
 			StatusCode:          http.StatusOK,
 			ExpectedLanguage:    "german",
-			ExpectedTranslation: "hallo",
+			ExpectedTranslation: "bar",
 		},
 		{
-			Endpoint:            "/hello?language=dutch",
+			Endpoint:            "/baz",
 			StatusCode:          http.StatusNotFound,
 			ExpectedLanguage:    "",
 			ExpectedTranslation: "",
 		},
 	}
 
-	handler := http.HandlerFunc(rest.TranslateHandler)
+	h := rest.NewTranslateHandler(&stubbedService{})
+	handler := http.HandlerFunc(h.TranslateHandler)
 
 	for _, test := range tt {
 		// Arrange

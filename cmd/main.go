@@ -8,6 +8,7 @@ import (
 
 	"github.com/jgrecu/hello-api/handlers"
 	"github.com/jgrecu/hello-api/handlers/rest"
+	"github.com/jgrecu/hello-api/translation"
 )
 
 func main() {
@@ -19,7 +20,10 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("GET /hello", rest.TranslateHandler)
+	translationService := translation.NewStaticService()
+	translateHandler := rest.NewTranslateHandler(translationService)
+
+	mux.HandleFunc("GET /translate/hello", translateHandler.TranslateHandler)
 	mux.HandleFunc("GET /health", handlers.HealthCheck)
 
 	server := &http.Server{Addr: addr, ReadHeaderTimeout: 3, Handler: mux}
