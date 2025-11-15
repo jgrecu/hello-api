@@ -5,17 +5,72 @@ linters:
     - gosec
     - godot
     - godox
+    - gocognit
     - misspell
+    - modernize
     - staticcheck
+    - tagalign
 
   settings:
     godox:
       keywords:
         - FIXME
+        - NOTE
+        - OPTIMIZE # marks code that should be optimized before merging
+        - HACK # marks hack-around that should be removed before merging
+    gocognit:
+      # Minimal code complexity to report.
+      min-complexity: 10
     misspell:
       locale: UK
       ignore-rules:
         - "importas" # linter name
+    staticcheck:
+      dot-import-whitelist:
+        - fmt
+      initialisms: [ "ACL", "API", "ASCII", "CPU", "CSS", "DNS", "EOF", "GUID", "HTML", "HTTP", "HTTPS", "ID", "IP", "JSON", "QPS", "RAM", "RPC", "SLA", "SMTP", "SQL", "SSH", "TCP", "TLS", "TTL", "UDP", "UI", "GID", "UID", "UUID", "URI", "URL", "UTF8", "VM", "XML", "XMPP", "XSRF", "XSS", "SIP", "RTP", "AMQP", "DB", "TS" ]
+      # Default: ["200", "400", "404", "500"]
+      http-status-code-whitelist: [ "200", "400", "404", "500" ]
+      # Default: ["all", "-ST1000", "-ST1003", "-ST1016", "-ST1020", "-ST1021", "-ST1022"]
+      checks: ["all", "ST1*"]
+    tagalign:
+      # Align and sort can be used together or separately.
+      #
+      # Whether enable align. If true, the struct tags will be aligned.
+      # E.g.:
+      # type FooBar struct {
+      #     Bar    string `json:"bar" validate:"required"`
+      #     FooFoo int8   `json:"foo_foo" validate:"required"`
+      # }
+      # will be formatted to:
+      # type FooBar struct {
+      #     Bar    string `json:"bar"     validate:"required"`
+      #     FooFoo int8   `json:"foo_foo" validate:"required"`
+      # }
+      # Default: true.
+      align: false
+      # Whether enable tags sort.
+      # If true, the tags will be sorted by name in ascending order.
+      # E.g.: `xml:"bar" json:"bar" validate:"required"` -> `json:"bar" validate:"required" xml:"bar"`.
+      # Default: true
+      sort: false
+      # Specify the order of tags, the other tags will be sorted by name.
+      # This option will be ignored if `sort` is false.
+      # Default: []
+      order:
+        - json
+        - yaml
+        - yml
+        - toml
+        - mapstructure
+        - binding
+        - validate
+      # Whether enable strict style.
+      # In this style, the tags will be sorted and aligned in the dictionary order,
+      # and the tags with the same name will be aligned together.
+      # Note: This option will be ignored if 'align' or 'sort' is false.
+      # Default: false
+      strict: true
 
 formatters:
   enable:
