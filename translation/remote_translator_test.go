@@ -69,3 +69,17 @@ func (suite *RemoteServiceTestSuite) TestTranslate_Error() {
 	suite.Equal(res, "")
 	suite.client.AssertExpectations(suite.T())
 }
+
+func (suite *RemoteServiceTestSuite) TestTranslate_Cache() {
+	// Arrange
+	suite.client.On("Translate", "foo", "bar").Return("baz", nil).Times(1)
+
+	// Act
+	res1 := suite.underTest.Translate("foo", "bar")
+	res2 := suite.underTest.Translate("Foo", "bar")
+
+	// Assert
+	suite.Equal(res1, "baz")
+	suite.Equal(res2, "baz")
+	suite.client.AssertExpectations(suite.T())
+}
