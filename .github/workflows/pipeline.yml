@@ -7,7 +7,7 @@ on:
     branches:
       - main
     tags:
-      - 'v*'
+      - "v*"
 jobs:
   format-check:
     name: Check formatting
@@ -127,25 +127,25 @@ jobs:
     needs: test
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     steps:
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v5
-      with:
-        fetch-depth: 0
-    - name: Auth
-      uses: google-github-actions/auth@v2
-      with:
-        credentials_json: ${{ secrets.gcp_credentials }}
-    - name: Deploy function
-      id: deploy
-      uses: google-github-actions/deploy-cloud-functions@main
-      with:
-        name: translate
-        entry_point: Translate
-        runtime: go125
-        project_id: 'ci-cd-387613'
-        region: 'europe-west1'
-    - id: test
-      run: curl "${{ steps.deploy.outputs.url }}/hello"
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.gcp_credentials }}
+      - name: Deploy function
+        id: deploy
+        uses: google-github-actions/deploy-cloud-functions@main
+        with:
+          name: translate
+          entry_point: Translate
+          runtime: go125
+          project_id: "ci-cd-387613"
+          region: "europe-west1"
+      - id: test
+        run: curl "${{ steps.deploy.outputs.url }}/hello"
   deploy-paas:
     name: Deploy PaaS
     runs-on: ubuntu-latest
@@ -164,9 +164,40 @@ jobs:
         id: deploy
         uses: google-github-actions/deploy-appengine@v3
         with:
-          project_id: 'ci-cd-387613'
+          project_id: "ci-cd-387613"
           deliverables: app.yaml
           promote: true
-          flags: '--ignore-file=.gcloudignore'
+          flags: "--ignore-file=.gcloudignore"
       - id: test
         run: curl "${{ steps.deploy.outputs.url }}/hello"
+  containerize-buildpack:
+    name: Build Container buildpack
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v5
+      - name: Setup-Tools
+        uses: buildpacks/github-actions/setup-tools@v5.1.0
+      - name: Setup-Pack
+        uses: buildpacks/github-actions/setup-pack@v5.1.0
+      - name: Build
+        run: pack build gcr.io/${{ secrets.GCP_PROJECT_ID }}/hello-api:latest --builder gcr.io/buildpacks/builder:google-22
+      - name: Auth Cloud SDK
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.gcp_credentials }}
+      - name: Configure Docker
+        run: gcloud auth configure-docker --quiet
+      - name: Push Docker image to GCP
+        run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/hello-api:latest
+      - name: Log in to the GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Tag for Github
+        run: docker image tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/hello-api:latest ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+      - name: Push Docker image to GHCR
+        run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
