@@ -1,11 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
-	"os"
 
+	"github.com/jgrecu/hello-api/config"
 	"github.com/jgrecu/hello-api/handlers"
 	"github.com/jgrecu/hello-api/handlers/rest"
 	"github.com/jgrecu/hello-api/translation"
@@ -13,10 +12,8 @@ import (
 
 func main() {
 
-	addr := fmt.Sprintf(":%s", os.Getenv("PORT"))
-	if addr == ":" {
-		addr = ":8080"
-	}
+	cfg := config.LoadConfiguration()
+	addr := cfg.Port
 
 	mux := http.NewServeMux()
 
