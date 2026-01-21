@@ -1,6 +1,6 @@
 GO_VERSION := 1.25
 TAG := $(shell git describe --abbrev=0 --tags --always)
-HASH := $(shell git rev-parse HEAD)
+HASH := $(shell git rev-parse --short HEAD)
 
 DATE := $(shell date +%Y-%m-%d.%H:%M:%S)
 LDFLAGS := -w -X github.com/jgrecu/hello-api/handlers.hash=$(HASH) \
@@ -52,6 +52,9 @@ check-format:
 
 static-check:
 	golangci-lint run
+
+clean:
+	rm api coverage.out cover.html
 
 copy-hooks:
 	chmod +x scripts/hooks/*
